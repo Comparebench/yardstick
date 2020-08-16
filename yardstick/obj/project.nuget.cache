@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "5A3T/EFpR/nZW1ZZ0wYLmi+zz2p03KX1EskOnF0MmGtyjP+J/mHBLbWsWrJ1JlIhwFiBUs9qo6h5vB4NXRQfeA==",
+  "dgSpecHash": "d5byki/BVWwirYraMTpcaGCIebAQ6/9lFGZdr4x9To2GBL+7/sufHodvS5m28CA5/cklBcykkqkOtXkzaduBmA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\Jeremy\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Jeremy\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Jeremy\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\restsharp\\106.11.4\\restsharp.106.11.4.nupkg.sha512",
     "C:\\Users\\Jeremy\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\4.7.0\\runtime.linux-arm.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
     "C:\\Users\\Jeremy\\.nuget\\packages\\runtime.linux-arm64.runtime.native.system.io.ports\\4.7.0\\runtime.linux-arm64.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
     "C:\\Users\\Jeremy\\.nuget\\packages\\runtime.linux-x64.runtime.native.system.io.ports\\4.7.0\\runtime.linux-x64.runtime.native.system.io.ports.4.7.0.nupkg.sha512",

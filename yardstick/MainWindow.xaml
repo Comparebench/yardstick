@@ -26,6 +26,7 @@
 			<TextBlock TextWrapping="Wrap" Text="Cinebench Score: " Grid.ColumnSpan="2" Margin="0,20,200,250" Grid.RowSpan="2"></TextBlock>
 			<TextBlock TextWrapping="Wrap" Text="{Binding cbScore,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" Grid.ColumnSpan="2" Margin="100,20,0,250" Grid.RowSpan="2"></TextBlock>
 			<Button Margin="10,39,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="SelectCinebenchLocation">Select Cinebench R20 Location</Button>
+			<Button Margin="10,80,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="UploadResult">Upload Result</Button>
 		</Grid>
 		</StackPanel>
 	

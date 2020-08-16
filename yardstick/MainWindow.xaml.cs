@@ -17,6 +17,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 using LibreHardwareMonitor.Hardware;
+using Newtonsoft.Json;
+using RestSharp;
+using RestSharp.Authenticators;
+using DataFormat = System.Windows.DataFormat;
 using MessageBox = System.Windows.MessageBox;
 
 namespace yardstick{
@@ -26,6 +30,7 @@ namespace yardstick{
     
     public partial class MainWindow : Window, INotifyPropertyChanged{
         private string _modelName;
+        private BenchmarkResult benchResult;
         public string ModelName
         {
             get { return _modelName; }
@@ -91,12 +96,23 @@ namespace yardstick{
                     Console.WriteLine("Selected Path: " + fbd.SelectedPath);
                     new BuildBat().Build(fbd.SelectedPath, BenchChoice.Cinebench);
                     var cbResult = new CBRunner().Run();
-                    cbScore = cbResult.Split("(")[0];
-                    Console.WriteLine(cbResult);
+                    cbScore = cbResult.Split("(")[0].Split("CB ")[1];
+                    benchResult = new BenchmarkResult();
+                    benchResult.BenchmarkType = "Cinebench";
+                    benchResult.score = cbScore;
                 }
             }
         }
-
+        private void UploadResult(object sender, RoutedEventArgs e)
+        {
+            var client = new RestClient("http://localhost:8180");
+            
+            var request = new RestRequest("api/benchmark/upload", Method.POST);
+            request.AddJsonBody(JsonConvert.SerializeObject(benchResult));
+            var response = client.Execute(request);
+            
+        }
+        
         private void mnuNew_Click(object sender, EventArgs e){
             About aboutWindow = new About();
             aboutWindow.ShowDialog();
