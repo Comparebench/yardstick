@@ -1,18 +1,22 @@
 {
   "version": 2,
-  "dgSpecHash": "HlPv8ug8PwihLv6DxnR32PrDW3QjGh5JT/XbZ//4k6+9dm4YQSP9aaBGstlwQV2UULmjFqoC5EpNEEIQGFniRA==",
-  "success": false,
+  "dgSpecHash": "RCByIuP98CgPIjKKoliD9Wpp3PZRLWDathk6HrB7GA4/X/9P6znHqiRzr+lbqNhUDo+iEFKbE6smVTK2FTeK9Q==",
+  "success": true,
   "projectFilePath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
-  "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Unable to find project 'C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  "expectedPackageFiles": [
+    "C:\\Users\\Jeremy\\.nuget\\packages\\hidsharp\\2.1.0\\hidsharp.2.1.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\4.7.0\\runtime.linux-arm.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\runtime.linux-arm64.runtime.native.system.io.ports\\4.7.0\\runtime.linux-arm64.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\runtime.linux-x64.runtime.native.system.io.ports\\4.7.0\\runtime.linux-x64.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\runtime.native.system.io.ports\\4.7.0\\runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\runtime.osx-x64.runtime.native.system.io.ports\\4.7.0\\runtime.osx-x64.runtime.native.system.io.ports.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\system.codedom\\4.7.0\\system.codedom.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\system.io.ports\\4.7.0\\system.io.ports.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\system.management\\4.7.0\\system.management.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
 }
