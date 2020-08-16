@@ -1,4 +1,4 @@
-﻿<Window x:Class="yardstick.MainWindow" 
+﻿<Window x:Class="yardstick.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,28 +6,48 @@
         xmlns:local="clr-namespace:yardstick"
         mc:Ignorable="d"
         Title="Comparebench Yardstick" Height="300" Width="400">
-	<StackPanel>
-		<DockPanel>
-			<Menu DockPanel.Dock="Top">
-				<MenuItem Header="About" Click="mnuNew_Click">
-				</MenuItem>
-			</Menu>
-		</DockPanel>
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
-			<TextBlock TextWrapping="Wrap" Text="CPU Model: " Grid.ColumnSpan="2" Margin="0,0,200,250" Grid.RowSpan="2"></TextBlock>
-			<TextBlock TextWrapping="Wrap" Text="{Binding ModelName,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" Grid.ColumnSpan="2" Margin="100,0,0,250" Grid.RowSpan="2"></TextBlock>
-		
-			<TextBlock TextWrapping="Wrap" Text="Cinebench Score: " Grid.ColumnSpan="2" Margin="0,20,200,250" Grid.RowSpan="2"></TextBlock>
-			<TextBlock TextWrapping="Wrap" Text="{Binding cbScore,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" Grid.ColumnSpan="2" Margin="100,20,0,250" Grid.RowSpan="2"></TextBlock>
-			<Button Margin="10,39,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="SelectCinebenchLocation">Select Cinebench R20 Location</Button>
-			<Button Margin="10,80,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="UploadResult">Upload Result</Button>
-		</Grid>
-		</StackPanel>
-	
+    <StackPanel>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="About" Click="mnuNew_Click" />
+            </Menu>
+        </DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock TextWrapping="Wrap" Text="CPU Model: " Grid.ColumnSpan="2" Margin="0,0,200,250" Grid.RowSpan="2" />
+            <TextBlock TextWrapping="Wrap"
+                       Text="{Binding ModelName,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                       Grid.ColumnSpan="2" Margin="100,0,0,250" Grid.RowSpan="2" />
+
+            <TextBlock TextWrapping="Wrap" Text="Cinebench Score: " Grid.ColumnSpan="2" Margin="0,20,200,250"
+                       Grid.RowSpan="2" />
+            <TextBlock TextWrapping="Wrap"
+                       Text="{Binding cbScore,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                       Grid.ColumnSpan="2" Margin="100,20,0,250" Grid.RowSpan="2" />
+            <Button Margin="10,39,0,229" Width="177" Height="25" HorizontalAlignment="Left"
+                    Click="SelectCinebenchLocation">
+                Select Cinebench R20 Location
+            </Button>
+            <Button Margin="10,80,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="UploadResult">Upload Result</Button>
+        </Grid>
+        <Grid>
+            <DataGrid
+                CanUserAddRows="False"
+                IsReadOnly="True"
+                CanUserDeleteRows="False"
+                Name="ProfileGrid"
+                ItemsSource="{Binding}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="CPU Model" Binding="{Binding CPUModel}" />
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </StackPanel>
+
 </Window>

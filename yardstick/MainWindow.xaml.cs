@@ -30,7 +30,8 @@ namespace yardstick{
     
     public partial class MainWindow : Window, INotifyPropertyChanged{
         private string _modelName;
-        private BenchmarkResult benchResult;
+        private Profile _profile = new Profile();
+        private List<Profile> _profiles = new List<Profile>();
         public string ModelName
         {
             get { return _modelName; }
@@ -61,6 +62,7 @@ namespace yardstick{
             computer.Open();
             computer.Accept(new UpdateVisitor());
             ModelName = computer.Hardware[0].Name;
+            _profile.CPUModel = ModelName;
             foreach (var hardware in computer.Hardware)
             {
                 if (hardware.HardwareType == HardwareType.Cpu)
@@ -97,9 +99,16 @@ namespace yardstick{
                     new BuildBat().Build(fbd.SelectedPath, BenchChoice.Cinebench);
                     var cbResult = new CBRunner().Run();
                     cbScore = cbResult.Split("(")[0].Split("CB ")[1];
-                    benchResult = new BenchmarkResult();
-                    benchResult.BenchmarkType = "Cinebench";
-                    benchResult.score = cbScore;
+
+                    _profile.ListBenchmarks.Add(new BenchmarkResult{
+                        BenchmarkType = "Cinebench",
+                        score = cbScore
+                    });
+
+                    _profiles.Add(_profile);
+                    
+                    ProfileGrid.DataContext = _profiles;
+                    OnPropertyChanged("ProfileGrid");
                 }
             }
         }
@@ -108,7 +117,7 @@ namespace yardstick{
             var client = new RestClient("http://localhost:8180");
             
             var request = new RestRequest("api/benchmark/upload", Method.POST);
-            request.AddJsonBody(JsonConvert.SerializeObject(benchResult));
+            request.AddJsonBody(JsonConvert.SerializeObject(_profile));
             var response = client.Execute(request);
             
         }

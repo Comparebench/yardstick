@@ -934,33 +934,31 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Jeremy\\.nuget\\packages\\": {}
+    "C:\\Users\\Thomas Lewis\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
+      "projectUniqueName": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
       "projectName": "yardstick",
-      "projectPath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
-      "packagesPath": "C:\\Users\\Jeremy\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\obj\\",
+      "projectPath": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
+      "packagesPath": "C:\\Users\\Thomas Lewis\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\yardstick\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Jeremy\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Thomas Lewis\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj": {
-              "projectPath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj"
+            "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj": {
+              "projectPath": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj"
             }
           }
         }
