@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Forms;
 using LibreHardwareMonitor.Hardware;
+using MessageBox = System.Windows.MessageBox;
 
 namespace yardstick{
     /// <summary>
@@ -95,6 +96,12 @@ namespace yardstick{
                 }
             }
         }
+
+        private void mnuNew_Click(object sender, EventArgs e){
+            About aboutWindow = new About();
+            aboutWindow.ShowDialog();
+        }
+     
         public class CBRunner
         {
             public string Run()
