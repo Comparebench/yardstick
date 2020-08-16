@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ittwHXyqT14TpakGyTIk7KFwsAPVCmoxduIah5anXGZUAXLd1q35n8v0HO28dnR/Hw93g2kI+jJZlG+8acg7OQ==",
+  "dgSpecHash": "K4koDnHfmD/sG/6Eaej1VMnASHHdfh12fcMfRqGlquQuKEXyM3zB9hbhFnZVA/V9awYTtqX0adLtDKF5CIcVrQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
   "expectedPackageFiles": [
@@ -19,7 +19,10 @@
     "C:\\Users\\Jeremy\\.nuget\\packages\\system.management\\4.7.0\\system.management.4.7.0.nupkg.sha512",
     "C:\\Users\\Jeremy\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Users\\Jeremy\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
-    "C:\\Users\\Jeremy\\.nuget\\packages\\system.windows.forms\\4.0.0\\system.windows.forms.4.0.0.nupkg.sha512"
+    "C:\\Users\\Jeremy\\.nuget\\packages\\system.windows.forms\\4.0.0\\system.windows.forms.4.0.0.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\3.1.7\\microsoft.netcore.app.runtime.win-x64.3.1.7.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\3.1.7\\microsoft.windowsdesktop.app.runtime.win-x64.3.1.7.nupkg.sha512",
+    "C:\\Users\\Jeremy\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\3.1.7\\microsoft.aspnetcore.app.runtime.win-x64.3.1.7.nupkg.sha512"
   ],
   "logs": [
     {
