@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "HlPv8ug8PwihLv6DxnR32PrDW3QjGh5JT/XbZ//4k6+9dm4YQSP9aaBGstlwQV2UULmjFqoC5EpNEEIQGFniRA==",
+  "success": false,
+  "projectFilePath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "Unable to find project 'C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj'. Check that the project reference is valid and that the project file exists.",
+      "libraryId": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
+}
