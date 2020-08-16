@@ -29,6 +29,16 @@
   },
   "frameworks": {
     "netcoreapp3.1": {
+      "dependencies": {
+        "System.Drawing.Common": {
+          "target": "Package",
+          "version": "[4.7.0, )"
+        },
+        "System.Windows.Forms": {
+          "target": "Package",
+          "version": "[4.0.0, )"
+        }
+      },
       "imports": [
         "net461",
         "net462",
