@@ -37,6 +37,7 @@
         </Grid>
         <Grid>
             <DataGrid
+                AutoGenerateColumns="False"
                 CanUserAddRows="False"
                 IsReadOnly="True"
                 CanUserDeleteRows="False"
