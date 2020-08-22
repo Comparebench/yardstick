@@ -7,3 +7,5 @@ Yardstick is an open source tool designed to run your benchmark software for you
 * View all your uploaded profiles, view past benchmark results
 
 Currently supports running Cinebench R20. Does not support the windows store version.
+
+Longer term goal is for Yardstick to become a benchmark of it's own.
