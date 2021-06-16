@@ -64,6 +64,7 @@ namespace yardstick{
 
         public MainWindow()
         {
+            // Construct basic hardware info
             InitializeComponent();
             Computer computer = new Computer
             {

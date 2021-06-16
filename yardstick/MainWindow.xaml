@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:yardstick"
         mc:Ignorable="d"
+        
         Title="Comparebench Yardstick" Height="300" Width="400">
     <StackPanel>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="About" Click="mnuNew_Click" />
+            </Menu>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="{Binding Source={x:Static local:Account.Name}}" Click="mnuNew_Click" />
             </Menu>
         </DockPanel>
         <Grid>

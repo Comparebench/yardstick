@@ -1,34 +1,38 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj": {}
+    "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj": {
+    "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj",
+        "projectUniqueName": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj",
         "projectName": "LibreHardwareMonitorLib",
-        "projectPath": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj",
-        "packagesPath": "C:\\Users\\Thomas Lewis\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\obj\\",
+        "projectPath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj",
+        "packagesPath": "C:\\Users\\Jeremy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "configFilePaths": [
-          "C:\\Users\\Thomas Lewis\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Jeremy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net452",
           "netstandard2.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net452": {
+            "targetAlias": "net452",
             "projectReferences": {}
           },
           "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
             "projectReferences": {}
           }
         },
@@ -40,6 +44,7 @@
       },
       "frameworks": {
         "net452": {
+          "targetAlias": "net452",
           "dependencies": {
             "HidSharp": {
               "target": "Package",
@@ -50,9 +55,10 @@
               "version": "[4.7.0, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         },
         "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "dependencies": {
             "HidSharp": {
               "target": "Package",
@@ -87,7 +93,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
@@ -96,29 +102,32 @@
         }
       }
     },
-    "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj": {
+    "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
+        "projectUniqueName": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
         "projectName": "yardstick",
-        "projectPath": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
-        "packagesPath": "C:\\Users\\Thomas Lewis\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\yardstick\\obj\\",
+        "projectPath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\yardstick.csproj",
+        "packagesPath": "C:\\Users\\Jeremy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\yardstick\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Thomas Lewis\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Jeremy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj": {
-                "projectPath": "C:\\Users\\Thomas Lewis\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj"
+              "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj": {
+                "projectPath": "C:\\Users\\Jeremy\\RiderProjects\\yardstick\\LibreHardwareMonitor\\LibreHardwareMonitorLib\\LibreHardwareMonitorLib.csproj"
               }
             }
           }
@@ -131,7 +140,20 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Auth0.OidcClient.Core": {
+              "target": "Package",
+              "version": "[3.2.2, )"
+            },
+            "Auth0.OidcClient.WPF": {
+              "target": "Package",
+              "version": "[3.2.2, )"
+            },
+            "IdentityModel.OidcClient": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
@@ -150,6 +172,7 @@
             }
           },
           "imports": [
+            "uap10.0.18362",
             "net461",
             "net462",
             "net47",
@@ -162,15 +185,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[3.1.7, 3.1.7]"
+              "version": "[3.1.16, 3.1.16]"
             },
             {
               "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[3.1.7, 3.1.7]"
+              "version": "[3.1.16, 3.1.16]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[3.1.7, 3.1.7]"
+              "version": "[3.1.16, 3.1.16]"
             }
           ],
           "frameworkReferences": {
@@ -181,7 +204,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
