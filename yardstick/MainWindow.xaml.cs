@@ -29,15 +29,25 @@ namespace yardstick{
     /// </summary>
     
     public partial class MainWindow : Window, INotifyPropertyChanged{
-        private string _modelName;
+        private string _cpuModelName;
+        private string _gpuModelName;
         private Profile _profile = new Profile();
         private List<Profile> _profiles = new List<Profile>();
-        public string ModelName
+        public string CPUModelName
         {
-            get { return _modelName; }
+            get { return _cpuModelName; }
             set
             {
-                _modelName = value;
+                _cpuModelName = value;
+                // OnPropertyChanged("ModelName");
+            }
+        }
+        public string GPUModelName
+        {
+            get { return _gpuModelName; }
+            set
+            {
+                _gpuModelName = value;
                 // OnPropertyChanged("ModelName");
             }
         }
@@ -57,12 +67,20 @@ namespace yardstick{
             InitializeComponent();
             Computer computer = new Computer
             {
-                IsCpuEnabled = true
+                IsCpuEnabled = true,
+                IsGpuEnabled = true,
+                IsMemoryEnabled = true,
+                IsMotherboardEnabled = true,
+                IsControllerEnabled = true,
+                IsNetworkEnabled = true,
+                IsStorageEnabled = true
             };
             computer.Open();
             computer.Accept(new UpdateVisitor());
-            ModelName = computer.Hardware[0].Name;
-            _profile.CPUModel = ModelName;
+            CPUModelName = computer.Hardware[0].Name;
+            GPUModelName = computer.Hardware[2].Name;
+            _profile.CPUModel = CPUModelName;
+            _profile.GPUModel = GPUModelName;
             foreach (var hardware in computer.Hardware)
             {
                 if (hardware.HardwareType == HardwareType.Cpu)
@@ -77,8 +95,9 @@ namespace yardstick{
                 }
                
             }
-            
         }
+
+     
         //INotifyPropertyChanged members
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -116,9 +135,10 @@ namespace yardstick{
         {
             var client = new RestClient("http://localhost:8180");
             
-            var request = new RestRequest("api/benchmark/upload", Method.POST);
+            var request = new RestRequest("api/benchmarks/upload", Method.POST);
             request.AddJsonBody(JsonConvert.SerializeObject(_profile));
             var response = client.Execute(request);
+            Trace.WriteLine(response);
             
         }
         

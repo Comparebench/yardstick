@@ -6,7 +6,7 @@ namespace yardstick{
         public TResponse Post<TResponse>(string relativeUri, object postBody) where TResponse : new()
         {
             //Note: Ideally the RestClient isn't created for each request. 
-            var restClient = new RestClient("http://localhost:6543");
+            var restClient = new RestClient("http://localhost:8180");
 
             var restRequest = new RestRequest(relativeUri, Method.POST)
             {
