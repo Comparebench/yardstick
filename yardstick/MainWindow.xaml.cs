@@ -31,6 +31,7 @@ namespace yardstick{
     public partial class MainWindow : Window, INotifyPropertyChanged{
         private string _cpuModelName;
         private string _gpuModelName;
+        private RestClient restClient;
         private Profile _profile = new Profile();
         private List<Profile> _profiles = new List<Profile>();
         public string CPUModelName
@@ -62,8 +63,8 @@ namespace yardstick{
             }
         }
 
-        public MainWindow()
-        {
+        public MainWindow(RestClient _restClient){
+            restClient = _restClient;
             // Construct basic hardware info
             InitializeComponent();
             Computer computer = new Computer
@@ -107,6 +108,12 @@ namespace yardstick{
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
+        private void testConnection(object sender, RoutedEventArgs e){
+            var request = new RestRequest("api/account/profile", Method.POST);
+            var response = restClient.Execute(request);
+            Trace.WriteLine(response);
+        }
+
         private void SelectCinebenchLocation(object sender, RoutedEventArgs e)
         {
             using(var fbd = new FolderBrowserDialog())
