@@ -25,10 +25,11 @@ namespace yardstick
         public login(){
             
             InitializeComponent();
+            DiscordLogin();
+
         }
-        
-        private async void LoginButton_OnClick(object sender, RoutedEventArgs e)
-        {
+
+        private async void DiscordLogin(){
             string domain = ConfigurationManager.AppSettings["Auth0:Domain"];
             string clientId = ConfigurationManager.AppSettings["Auth0:ClientId"];
 
@@ -37,43 +38,12 @@ namespace yardstick
                 Domain = domain,
                 ClientId = clientId
             });
-
             var extraParameters = new Dictionary<string, string>();
-
-            if (!string.IsNullOrEmpty(connectionNameComboBox.Text))
-                extraParameters.Add("connection", connectionNameComboBox.Text);
-
-            if (!string.IsNullOrEmpty(audienceTextBox.Text))
-                extraParameters.Add("audience", audienceTextBox.Text);
-
+            extraParameters.Add("connection", "discord");
             DisplayResult(await client.LoginAsync(extraParameters: extraParameters));
         }
-
-        private void DisplayResult(LoginResult loginResult)
-        {
-            // Display error
-            if (loginResult.IsError)
-            {
-                resultTextBox.Text = loginResult.Error;
-                return;
-            }
-            
-            
-            logoutButton.Visibility = Visibility.Visible;
-            loginButton.Visibility = Visibility.Collapsed;
-
-            // Display result
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine("Tokens");
-            sb.AppendLine("------");
-            sb.AppendLine($"id_token: {loginResult.IdentityToken}");
-            sb.AppendLine($"access_token: {loginResult.AccessToken}");
-            sb.AppendLine($"refresh_token: {loginResult.RefreshToken}");
-            sb.AppendLine();
-            Account.Token = loginResult.IdentityToken;
-            sb.AppendLine("Claims");
-            sb.AppendLine("------");
+        
+        private void DisplayResult(LoginResult loginResult){
             
             foreach (var claim in loginResult.User.Claims)
             {
@@ -86,14 +56,14 @@ namespace yardstick
                 else if (claim.Type == "picture"){
                     Account.Picture = claim.Value;
                 }
-                sb.AppendLine($"{claim.Type}: {claim.Value}");
             }
+            Account.Token = loginResult.IdentityToken;
             
 
-            resultTextBox.Text = sb.ToString();
             Authenticate(null, null);
-            Close();
+            
             MainWindow mainWindow = new MainWindow(restClient);
+            Close();
             mainWindow.ShowDialog();
         }
         
@@ -109,31 +79,6 @@ namespace yardstick
             restClient.CookieContainer.Add(new System.Net.Cookie(authCookie.Name, authCookie.Value, authCookie.Path, authCookie.Domain));
             Trace.WriteLine(response);
         }
-
-        
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            connectionNameComboBox.ItemsSource = _connectionNames;
-        }
-
-        private async void LogoutButton_Click(object sender, RoutedEventArgs e)
-        {
-            BrowserResultType browserResult = await client.LogoutAsync();
-
-            if (browserResult != BrowserResultType.Success)
-            {
-                resultTextBox.Text = browserResult.ToString();
-                return;
-            }
-
-            logoutButton.Visibility = Visibility.Collapsed;
-            loginButton.Visibility = Visibility.Visible;
-
-            audienceTextBox.Text = "";
-            resultTextBox.Text = "";
-            connectionNameComboBox.ItemsSource = _connectionNames;
-        }
-        
         
     }
 }
