@@ -5,7 +5,7 @@ namespace yardstick{
     public partial class About : Window{
         public About(){
             InitializeComponent();
-            Owner = App.Current.MainWindow;
+            /*Owner = App.Current.MainWindow;*/
         }
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
