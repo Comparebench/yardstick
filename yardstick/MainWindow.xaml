@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:yardstick"
         mc:Ignorable="d"
+        
         Title="Comparebench Yardstick" Height="300" Width="400">
     <StackPanel>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="About" Click="mnuNew_Click" />
+            </Menu>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="{Binding Source={x:Static local:Account.Name}}"/>
             </Menu>
         </DockPanel>
         <Grid>
@@ -39,6 +43,7 @@
                 Select Cinebench R20 Location
             </Button>
             <Button Margin="10,80,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="UploadResult">Upload Result</Button>
+            <Button Margin="10,160,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="testConnection">Test Connection</Button>
         </Grid>
         <Grid>
             <DataGrid
