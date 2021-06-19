@@ -23,8 +23,8 @@ namespace yardstick
                 if (!File.Exists(_batPath))
                     File.Create(_batPath).Close();
 
-                try
-                {
+                // try
+                // {
                     switch (benchChoice)
                     {
                         case BenchChoice.Cinebench:
@@ -35,12 +35,12 @@ namespace yardstick
                             Console.WriteLine("Unexpected Error");
                             break;
                     }
-                }
+                // }
                 // Catch all exceptions since I don't want to figure out what exceptions might be thrown at the moment
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+                // catch (Exception e)
+                // {
+                //     Console.WriteLine(e);
+                // }
             }
             else
                 Console.WriteLine(path + " does not exist");

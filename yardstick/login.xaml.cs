@@ -15,13 +15,9 @@ namespace yardstick
 {
     public partial class login : Window
     {
-        private Auth0Client client;
-        public RestClient restClient = new RestClient("https://comparebench.com");
-        private readonly string[] _connectionNames = new string[]{
-            "google-oauth2",
-            "discord",
-        };
-        
+        private Auth0Client _client;
+        private readonly RestClient _restClient = new RestClient("https://comparebench.com");
+
         public login(){
             
             InitializeComponent();
@@ -33,14 +29,14 @@ namespace yardstick
             string domain = ConfigurationManager.AppSettings["Auth0:Domain"];
             string clientId = ConfigurationManager.AppSettings["Auth0:ClientId"];
 
-            client = new Auth0Client(new Auth0ClientOptions
+            _client = new Auth0Client(new Auth0ClientOptions
             {
                 Domain = domain,
                 ClientId = clientId
             });
             var extraParameters = new Dictionary<string, string>();
             extraParameters.Add("connection", "discord");
-            DisplayResult(await client.LoginAsync(extraParameters: extraParameters));
+            DisplayResult(await _client.LoginAsync(extraParameters: extraParameters));
         }
         
         private void DisplayResult(LoginResult loginResult){
@@ -62,7 +58,7 @@ namespace yardstick
 
             Authenticate(null, null);
             
-            MainWindow mainWindow = new MainWindow(restClient);
+            MainWindow mainWindow = new MainWindow(_restClient);
             Close();
             mainWindow.ShowDialog();
         }
@@ -73,10 +69,10 @@ namespace yardstick
             
             var request = new RestRequest("api/client_login", Method.POST);
             request.AddJsonBody(JsonConvert.SerializeObject(Account.Token));
-            var response = restClient.Execute(request);
-            restClient.CookieContainer = new System.Net.CookieContainer();
+            var response = _restClient.Execute(request);
+            _restClient.CookieContainer = new System.Net.CookieContainer();
             var authCookie = response.Cookies.First(a => a.Name == "auth_tkt");  
-            restClient.CookieContainer.Add(new System.Net.Cookie(authCookie.Name, authCookie.Value, authCookie.Path, authCookie.Domain));
+            _restClient.CookieContainer.Add(new System.Net.Cookie(authCookie.Name, authCookie.Value, authCookie.Path, authCookie.Domain));
             Trace.WriteLine(response);
         }
         
