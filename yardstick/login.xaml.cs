@@ -16,7 +16,7 @@ namespace yardstick
     public partial class login : Window
     {
         private Auth0Client client;
-        public RestClient restClient = new RestClient("http://localhost:8180");
+        public RestClient restClient = new RestClient("https://comparebench.com");
         private readonly string[] _connectionNames = new string[]{
             "google-oauth2",
             "discord",
