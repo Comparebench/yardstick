@@ -18,9 +18,9 @@ namespace yardstick
     public partial class MainWindow : INotifyPropertyChanged
     {
         private readonly RestClient _restClient;
-        private List<Profile> _profiles = new List<Profile>();
 
         public Profile Profile{ get; set; } = new Profile();
+        public List<Profile> Profiles{ get; set; } = new List<Profile>();
 
         private string _cbScore;
 
@@ -96,9 +96,9 @@ namespace yardstick
                         score = CbScore
                     });
 
-                    _profiles.Add(Profile);
+                    Profiles.Add(Profile);
 
-                    ProfileGrid.DataContext = _profiles;
+                    // ProfileGrid.DataContext = Profiles;
                     OnPropertyChanged("ProfileGrid");
                 }
             }
@@ -107,6 +107,8 @@ namespace yardstick
         private void UploadResult(object sender, RoutedEventArgs e){
             var request = new RestRequest("api/benchmarks/upload", Method.POST);
 
+            Profile.Name = BuildName.Text;
+            
             JsonSerializerSettings sets = new JsonSerializerSettings(){
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
