@@ -12,11 +12,13 @@ namespace yardstick
             ListBenchmarks = new List<BenchmarkResult>();
         }
 
-        public IHardware CPUModel{ get; set; }
+        public IHardware CpuModel{ get; set; }
 
-        public List<IHardware> GPUModels{ get; set; }
+        public List<IHardware> GpuModels{ get; set; }
 
         public IHardware MotherboardModel{ get; set; }
+        
+        public IHardware RamModel{ get; set; }
 
         public List<BenchmarkResult> ListBenchmarks{ get; set; }
     }
@@ -24,6 +26,6 @@ namespace yardstick
     public class BenchmarkResult
     {
         public string BenchmarkType{ get; set; }
-        public string score{ get; set; }
+        public string Score{ get; set; }
     }
 }

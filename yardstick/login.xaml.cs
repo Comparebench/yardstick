@@ -36,6 +36,7 @@ namespace yardstick
             });
             var extraParameters = new Dictionary<string, string>();
             extraParameters.Add("connection", "discord");
+            
             DisplayResult(await _client.LoginAsync(extraParameters: extraParameters));
         }
         

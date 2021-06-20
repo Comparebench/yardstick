@@ -48,11 +48,12 @@ namespace yardstick
             computer.Open();
             computer.Accept(new UpdateVisitor());
             
-            Profile.CPUModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Cpu);
+            Profile.CpuModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Cpu);
             //MoboModelName = computer.Hardware.First(a => a.HardwareType == HardwareType.Motherboard).Name;
-            Profile.GPUModels = computer.Hardware
+            Profile.GpuModels = computer.Hardware
                 .Where(a => a.HardwareType == HardwareType.GpuAmd || a.HardwareType == HardwareType.GpuNvidia).ToList();
             Profile.MotherboardModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Motherboard);
+            Profile.RamModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Memory);
 
             foreach (var hardware in computer.Hardware){
                 if (hardware.HardwareType == HardwareType.Cpu){
@@ -93,7 +94,7 @@ namespace yardstick
 
                     Profile.ListBenchmarks.Add(new BenchmarkResult{
                         BenchmarkType = "Cinebench",
-                        score = CbScore
+                        Score = CbScore
                     });
 
                     Profiles.Add(Profile);

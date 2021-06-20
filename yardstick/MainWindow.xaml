@@ -40,7 +40,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock TextWrapping="Wrap" Text="CPU Model: " Grid.Column="0" />
                 <TextBlock TextWrapping="Wrap"
-                           Text="{Binding Profile.CPUModel.Name,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                           Text="{Binding Profile.CpuModel.Name,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
                            Grid.Column="1"
                            TextAlignment="Right" />
             </Grid>
@@ -68,7 +68,7 @@
                 <TextBlock TextWrapping="Wrap" Text="GPU Model: "
                            Grid.RowSpan="2" />
                 <TextBlock TextWrapping="Wrap"
-                           Text="{Binding Profile.GPUModels[0].Name,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                           Text="{Binding Profile.GpuModels[0].Name,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
                            Grid.Column="1"
                            TextAlignment="Right" />
             </Grid>
