@@ -10,6 +10,7 @@ namespace yardstick
         }
 
         public String CPUModel{ get; set; }
+        
         public String GPUModel{ get; set; }
 
         public List<BenchmarkResult> ListBenchmarks{ get; set; }
