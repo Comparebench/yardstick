@@ -8,7 +8,7 @@
         xmlns:viewModels="clr-namespace:yardstick.ViewModels"
         mc:Ignorable="d"
 
-        Title="Comparebench Yardstick" Height="300" Width="400" Loaded="Page_Loaded">
+        Title="Comparebench Yardstick" Height="400" Width="400" Loaded="Page_Loaded">
 
     <Window.DataContext>
         <viewModels:BuildViewModel />
@@ -92,7 +92,7 @@
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0}, {1:0}GB">
                             <Binding Path="RamModel.Name" />
-                            <Binding Path="GetRamValue"/>
+                            <Binding Path="GetRamValue" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
@@ -105,7 +105,7 @@
                 <TextBlock Style="{StaticResource ModelType}"
                            Text="CB Score: " />
                 <TextBlock Style="{StaticResource HardwareName}"
-                           Text="{Binding CbScore, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+                           Text="{Binding CbScore}" />
             </WrapPanel>
         </Grid>
 
@@ -124,7 +124,8 @@
 
         <!-- Upload -->
         <Grid Margin="5">
-            <TextBox x:Name="BuildName" Width="150" HorizontalAlignment="Left" />
+            <TextBox x:Name="BuildName" Width="150" HorizontalAlignment="Left"
+                     Text="{Binding Path=Profile.Name, Mode=TwoWay}" />
         </Grid>
         <Grid>
             <Button Grid.Column="0" Width="177" Height="25" HorizontalAlignment="Left"

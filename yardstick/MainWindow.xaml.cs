@@ -16,22 +16,12 @@ namespace yardstick
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : INotifyPropertyChanged
+    public partial class MainWindow
     {
         private readonly RestClient _restClient;
 
         public BuildViewModel BuildViewModel{ get; set; }
         public List<Profile> Profiles{ get; set; } = new List<Profile>();
-
-        private string _cbScore;
-
-        public string CbScore{
-            get => _cbScore;
-            set{
-                _cbScore = value;
-                OnPropertyChanged("cbScore");
-            }
-        }
 
         public MainWindow(RestClient restClient){
             _restClient = restClient;
@@ -72,16 +62,6 @@ namespace yardstick
             return profile;
         }
 
-
-        //INotifyPropertyChanged members
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName){
-            var handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private void TestConnection(object sender, RoutedEventArgs e){
             var request = new RestRequest("api/account/profile", Method.POST);
             var response = _restClient.Execute(request);
@@ -96,18 +76,12 @@ namespace yardstick
                     Console.WriteLine("Selected Path: " + fbd.SelectedPath);
                     new BuildBat().Build(fbd.SelectedPath, BenchChoice.Cinebench);
                     var cbResult = new CBRunner().Run();
-                    CbScore = cbResult.Split("(")[0].Split("CB ")[1];
+                    BuildViewModel.CbScore = cbResult.Split("(")[0].Split("CB ")[1];
 
-                    BuildViewModel.ListBenchmarks.Add(new BenchmarkResult{
+                    BuildViewModel.Profile.ListBenchmarks.Add(new BenchmarkResult{
                         BenchmarkType = "Cinebench",
-                        Score = CbScore
+                        Score = BuildViewModel.CbScore
                     });
-                    ;
-
-                    // Profiles.Add(BuildViewModel);
-
-                    // ProfileGrid.DataContext = Profiles;
-                    OnPropertyChanged("ProfileGrid");
                 }
             }
         }
@@ -127,7 +101,13 @@ namespace yardstick
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
 
-            request.AddJsonBody(JsonConvert.SerializeObject(BuildViewModel.Profile, sets));
+            String irr = JsonConvert.SerializeObject(BuildViewModel.Profile, sets);
+
+            if(!File.Exists(BuildViewModel.Name + ".json"))
+                File.Create(BuildViewModel.Name + ".json").Close();
+            File.WriteAllText(BuildViewModel.Name + ".json", irr);
+
+            request.AddJsonBody(irr);
             var response = _restClient.Execute(request);
             Trace.WriteLine(response);
         }
@@ -140,12 +120,12 @@ namespace yardstick
         public class CBRunner
         {
             public string Run(){
-                Process p = new Process();
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.FileName = @"bench.bat";
-                p.Start();
-                p.WaitForExit();
+                // Process p = new Process();
+                // p.StartInfo.UseShellExecute = false;
+                // p.StartInfo.RedirectStandardOutput = true;
+                // p.StartInfo.FileName = @"bench.bat";
+                // p.Start();
+                // p.WaitForExit();
 
                 using (StreamReader rd = new StreamReader("text.txt")){
                     string[] lines = rd.ReadToEnd()
