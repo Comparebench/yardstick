@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using LibreHardwareMonitor.Hardware;
 
 namespace yardstick
@@ -12,14 +13,14 @@ namespace yardstick
             ListBenchmarks = new List<BenchmarkResult>();
         }
 
-        public IHardware CpuModel{ get; set; }
+        public List<IHardware> CpuModels{ get; set; }
 
         public List<IHardware> GpuModels{ get; set; }
 
         public IHardware MotherboardModel{ get; set; }
         
         public IHardware RamModel{ get; set; }
-
+      
         public List<BenchmarkResult> ListBenchmarks{ get; set; }
     }
 

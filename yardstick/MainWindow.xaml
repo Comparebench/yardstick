@@ -1,12 +1,34 @@
 ﻿<Window x:Class="yardstick.MainWindow"
+
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:yardstick"
+        xmlns:viewModels="clr-namespace:yardstick.ViewModels"
         mc:Ignorable="d"
 
-        Title="Comparebench Yardstick" Height="300" Width="400">
+        Title="Comparebench Yardstick" Height="300" Width="400" Loaded="Page_Loaded">
+
+    <Window.DataContext>
+        <viewModels:BuildViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style x:Key="ModelType"
+               TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style x:Key="HardwareName"
+               TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
+
     <StackPanel>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
@@ -16,120 +38,119 @@
                 <TextBlock Text="{Binding Source={x:Static local:Account.Name}}" />
             </Menu>
         </DockPanel>
-        <Grid x:Name="MainGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
 
-            <!-- CPU -->
-            <Grid Grid.Row="0" Grid.Column="0" Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <TextBlock TextWrapping="Wrap" Text="CPU Model: " Grid.Column="0" />
-                <TextBlock TextWrapping="Wrap"
-                           Text="{Binding Profile.CpuModel.Name,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
-                           Grid.Column="1"
-                           TextAlignment="Right" />
-            </Grid>
+        <!-- CPU -->
+        <ItemsControl
+            ItemsSource="{Binding CpuModels}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <WrapPanel>
+                            <TextBlock Style="{StaticResource ModelType}"
+                                       Text="CPU Model: " />
+                            <TextBlock Style="{StaticResource HardwareName}"
+                                       Text="{Binding Path=Name}" />
+                        </WrapPanel>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
-            <!-- Mobo -->
-            <Grid Grid.Row="1" Grid.Column="0" Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <TextBlock TextWrapping="Wrap" Text="Mobo Model: "
-                           Grid.RowSpan="2" />
-                <TextBlock TextWrapping="Wrap"
-                           Text="{Binding Profile.MotherboardModel.Name,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
-                           Grid.Column="1"
-                           TextAlignment="Right" />
-            </Grid>
+        <!-- GPU -->
+        <ItemsControl
+            ItemsSource="{Binding GpuModels}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <WrapPanel>
+                            <TextBlock Style="{StaticResource ModelType}"
+                                       Text="GPU Model: " />
+                            <TextBlock Style="{StaticResource HardwareName}"
+                                       Text="{Binding Path=Name}" />
+                        </WrapPanel>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
-            <!-- GPU -->
-            <Grid Grid.Row="2" Grid.Column="0" Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <TextBlock TextWrapping="Wrap" Text="GPU Model: "
-                           Grid.RowSpan="2" />
-                <TextBlock TextWrapping="Wrap"
-                           Text="{Binding Profile.GpuModels[0].Name,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
-                           Grid.Column="1"
-                           TextAlignment="Right" />
-            </Grid>
-
-            <!-- CB Score -->
-            <Grid Grid.Row="3" Grid.Column="0" Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <TextBlock TextWrapping="Wrap" Text="Cinebench Score: "
-                           Grid.RowSpan="2" />
-                <TextBlock TextWrapping="Wrap"
-                           Text="{Binding CbScore,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
-                           Grid.Column="1"
-                           TextAlignment="Right" />
-            </Grid>
-
-            <!-- Select CB Location -->
-            <Grid Grid.Row="4" Grid.Column="0" Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <Button Width="177" Height="25" HorizontalAlignment="Left"
-                        Click="SelectCinebenchLocation">
-                    Select Cinebench R20 Location
-                </Button>
-            </Grid>
-
-            <!-- Upload -->
-            <Grid Grid.Row="5" Grid.Column="0" Margin="5">
-                <TextBox x:Name="BuildName" Width="150" HorizontalAlignment="Left" />
-            </Grid>
-            <Grid Grid.Row="6" Grid.Column="0">
-                <Button Grid.Column="0" Width="177" Height="25" HorizontalAlignment="Left"
-                        Click="UploadResult">
-                    Upload Result
-                </Button>
-                <!-- <Button Margin="10,160,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="TestConnection">Test Connection</Button> -->
-            </Grid>
-
-            <!-- <Grid Grid.Row="7" Grid.Column="0"> -->
-            <!--     <DataGrid -->
-            <!--         AutoGenerateColumns="False" -->
-            <!--         CanUserAddRows="False" -->
-            <!--         IsReadOnly="True" -->
-            <!--         CanUserDeleteRows="False" -->
-            <!--         Name="ProfileGrid" -->
-            <!--         ItemsSource="{Binding }"> -->
-            <!--         <DataGrid.Columns> -->
-            <!--             <DataGridTextColumn Header="Name" Binding="{Binding Profile.Name}" /> -->
-            <!--             <DataGridTextColumn Header="Build" Binding="{Binding Profile.CPUModel.Name}" /> -->
-            <!--             <DataGridTextColumn Header="Build" Binding="{Binding Profile.MotherboardModel.Name}" /> -->
-            <!--             <DataGridTextColumn Header="Build" Binding="{Binding Profile.GPUModels[0].Name}" /> -->
-            <!--         </DataGrid.Columns> -->
-            <!--     </DataGrid> -->
-            <!-- </Grid> -->
-            
+        <!-- Motherboard -->
+        <Grid>
+            <WrapPanel>
+                <TextBlock Style="{StaticResource ModelType}"
+                           Text="Mobo Model: " />
+                <TextBlock Style="{StaticResource HardwareName}"
+                           Text="{Binding MotherboardModel.Name}" />
+            </WrapPanel>
         </Grid>
+
+        <!-- RAM -->
+        <Grid>
+            <WrapPanel>
+                <TextBlock Style="{StaticResource ModelType}"
+                           Text="RAM Model: " />
+                <TextBlock Style="{StaticResource HardwareName}">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0}, {1:0}GB">
+                            <Binding Path="RamModel.Name" />
+                            <Binding Path="GetRamValue"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </WrapPanel>
+        </Grid>
+
+        <!-- CineBench Score -->
+        <Grid>
+            <WrapPanel>
+                <TextBlock Style="{StaticResource ModelType}"
+                           Text="CB Score: " />
+                <TextBlock Style="{StaticResource HardwareName}"
+                           Text="{Binding CbScore, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}" />
+            </WrapPanel>
+        </Grid>
+
+        <!-- Select CB Location -->
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Width="177" Height="25" HorizontalAlignment="Left"
+                    Click="SelectCinebenchLocation">
+                Select Cinebench R20 Location
+            </Button>
+        </Grid>
+
+        <!-- Upload -->
+        <Grid Margin="5">
+            <TextBox x:Name="BuildName" Width="150" HorizontalAlignment="Left" />
+        </Grid>
+        <Grid>
+            <Button Grid.Column="0" Width="177" Height="25" HorizontalAlignment="Left"
+                    Click="UploadResult">
+                Upload Result
+            </Button>
+            <!-- <Button Margin="10,160,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="TestConnection">Test Connection</Button> -->
+        </Grid>
+
+        <!-- <Grid Grid.Row="7" Grid.Column="0"> -->
+        <!--     <DataGrid -->
+        <!--         AutoGenerateColumns="False" -->
+        <!--         CanUserAddRows="False" -->
+        <!--         IsReadOnly="True" -->
+        <!--         CanUserDeleteRows="False" -->
+        <!--         Name="ProfileGrid" -->
+        <!--         ItemsSource="{Binding }"> -->
+        <!--         <DataGrid.Columns> -->
+        <!--             <DataGridTextColumn Header="Name" Binding="{Binding Profile.Name}" /> -->
+        <!--             <DataGridTextColumn Header="Build" Binding="{Binding Profile.CPUModel.Name}" /> -->
+        <!--             <DataGridTextColumn Header="Build" Binding="{Binding Profile.MotherboardModel.Name}" /> -->
+        <!--             <DataGridTextColumn Header="Build" Binding="{Binding Profile.GPUModels[0].Name}" /> -->
+        <!--         </DataGrid.Columns> -->
+        <!--     </DataGrid> -->
+        <!-- </Grid> -->
+
     </StackPanel>
 
 </Window>

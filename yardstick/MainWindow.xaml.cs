@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using LibreHardwareMonitor.Hardware;
 using Newtonsoft.Json;
 using RestSharp;
+using yardstick.ViewModels;
 
 namespace yardstick
 {
@@ -19,7 +20,7 @@ namespace yardstick
     {
         private readonly RestClient _restClient;
 
-        public Profile Profile{ get; set; } = new Profile();
+        public BuildViewModel BuildViewModel{ get; set; }
         public List<Profile> Profiles{ get; set; } = new List<Profile>();
 
         private string _cbScore;
@@ -36,6 +37,9 @@ namespace yardstick
             _restClient = restClient;
             // Construct basic hardware info
             InitializeComponent();
+        }
+
+        private Profile BuildProfile(){
             Computer computer = new Computer{
                 IsCpuEnabled = true,
                 IsGpuEnabled = true,
@@ -48,22 +52,24 @@ namespace yardstick
             computer.Open();
             computer.Accept(new UpdateVisitor());
             
-            Profile.CpuModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Cpu);
-            //MoboModelName = computer.Hardware.First(a => a.HardwareType == HardwareType.Motherboard).Name;
-            Profile.GpuModels = computer.Hardware
-                .Where(a => a.HardwareType == HardwareType.GpuAmd || a.HardwareType == HardwareType.GpuNvidia).ToList();
-            Profile.MotherboardModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Motherboard);
-            Profile.RamModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Memory);
+            Profile profile = new Profile();
 
+            profile.CpuModels = computer.Hardware.Where(a => a.HardwareType == HardwareType.Cpu).ToList();
+            profile.GpuModels = computer.Hardware
+                .Where(a => a.HardwareType == HardwareType.GpuAmd || a.HardwareType == HardwareType.GpuNvidia).ToList();
+            profile.MotherboardModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Motherboard);
+            profile.RamModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Memory);
+            
             foreach (var hardware in computer.Hardware){
-                if (hardware.HardwareType == HardwareType.Cpu){
-                    foreach (var sensor in hardware.Sensors){
-                        if (sensor.SensorType == SensorType.Clock){
-                            Console.WriteLine("\tSensor: {0}, value: {1}", sensor.Name, sensor.Value);
-                        }
+                if (hardware.HardwareType != HardwareType.Cpu) continue;
+                foreach (var sensor in hardware.Sensors){
+                    if (sensor.SensorType == SensorType.Clock){
+                        Console.WriteLine("\tSensor: {0}, value: {1}", sensor.Name, sensor.Value);
                     }
                 }
             }
+
+            return profile;
         }
 
 
@@ -92,12 +98,13 @@ namespace yardstick
                     var cbResult = new CBRunner().Run();
                     CbScore = cbResult.Split("(")[0].Split("CB ")[1];
 
-                    Profile.ListBenchmarks.Add(new BenchmarkResult{
+                    BuildViewModel.ListBenchmarks.Add(new BenchmarkResult{
                         BenchmarkType = "Cinebench",
                         Score = CbScore
                     });
+                    ;
 
-                    Profiles.Add(Profile);
+                    // Profiles.Add(BuildViewModel);
 
                     // ProfileGrid.DataContext = Profiles;
                     OnPropertyChanged("ProfileGrid");
@@ -105,16 +112,22 @@ namespace yardstick
             }
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e){
+            BuildViewModel = new BuildViewModel(BuildProfile());
+
+            DataContext = BuildViewModel;
+        }
+
         private void UploadResult(object sender, RoutedEventArgs e){
             var request = new RestRequest("api/benchmarks/upload", Method.POST);
 
-            Profile.Name = BuildName.Text;
-            
+            BuildViewModel.Name = BuildName.Text;
+
             JsonSerializerSettings sets = new JsonSerializerSettings(){
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
-            
-            request.AddJsonBody(JsonConvert.SerializeObject(Profile, sets));
+
+            request.AddJsonBody(JsonConvert.SerializeObject(BuildViewModel.Profile, sets));
             var response = _restClient.Execute(request);
             Trace.WriteLine(response);
         }
@@ -127,12 +140,12 @@ namespace yardstick
         public class CBRunner
         {
             public string Run(){
-                // Process p = new Process();
-                // p.StartInfo.UseShellExecute = false;
-                // p.StartInfo.RedirectStandardOutput = true;
-                // p.StartInfo.FileName = @"bench.bat";
-                // p.Start();
-                // p.WaitForExit();
+                Process p = new Process();
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.FileName = @"bench.bat";
+                p.Start();
+                p.WaitForExit();
 
                 using (StreamReader rd = new StreamReader("text.txt")){
                     string[] lines = rd.ReadToEnd()
