@@ -29,7 +29,7 @@ namespace yardstick.ViewModels
         public IHardware RamModel => Profile.RamModel;
 
         public String CbScore{
-            get{ return _cbScore; }
+            get => _cbScore;
             set{
                 _cbScore = value;
                 OnPropertyChanged(new PropertyChangedEventArgs("CbScore"));
@@ -47,7 +47,7 @@ namespace yardstick.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged(PropertyChangedEventArgs e){
+        private void OnPropertyChanged(PropertyChangedEventArgs e){
             if (PropertyChanged != null)
                 PropertyChanged(this, e);
         }
