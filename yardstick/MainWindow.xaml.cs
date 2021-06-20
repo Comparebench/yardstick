@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace yardstick
     {
         private readonly RestClient _restClient;
 
-        public BuildViewModel BuildViewModel{ get; set; }
+        private BuildViewModel BuildViewModel{ get; set; }
         public List<Profile> Profiles{ get; set; } = new List<Profile>();
 
         public MainWindow(RestClient restClient){
@@ -41,15 +40,16 @@ namespace yardstick
             };
             computer.Open();
             computer.Accept(new UpdateVisitor());
-            
-            Profile profile = new Profile();
 
-            profile.CpuModels = computer.Hardware.Where(a => a.HardwareType == HardwareType.Cpu).ToList();
-            profile.GpuModels = computer.Hardware
-                .Where(a => a.HardwareType == HardwareType.GpuAmd || a.HardwareType == HardwareType.GpuNvidia).ToList();
-            profile.MotherboardModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Motherboard);
-            profile.RamModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Memory);
-            
+            var profile = new Profile{
+                CpuModels = computer.Hardware.Where(a => a.HardwareType == HardwareType.Cpu).ToList(),
+                GpuModels = computer.Hardware
+                    .Where(a => a.HardwareType == HardwareType.GpuAmd || a.HardwareType == HardwareType.GpuNvidia)
+                    .ToList(),
+                MotherboardModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Motherboard),
+                RamModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Memory)
+            };
+
             foreach (var hardware in computer.Hardware){
                 if (hardware.HardwareType != HardwareType.Cpu) continue;
                 foreach (var sensor in hardware.Sensors){
@@ -62,28 +62,27 @@ namespace yardstick
             return profile;
         }
 
-        private void TestConnection(object sender, RoutedEventArgs e){
-            var request = new RestRequest("api/account/profile", Method.POST);
-            var response = _restClient.Execute(request);
-            Trace.WriteLine(response);
-        }
+        // private void TestConnection(object sender, RoutedEventArgs e){
+        //     var request = new RestRequest("api/account/profile", Method.POST);
+        //     var response = _restClient.Execute(request);
+        //     Trace.WriteLine(response);
+        // }
 
         private void SelectCinebenchLocation(object sender, RoutedEventArgs e){
-            using (var fbd = new FolderBrowserDialog()){
-                DialogResult result = fbd.ShowDialog();
+            using var fbd = new FolderBrowserDialog();
+            fbd.ShowDialog();
 
-                if (!string.IsNullOrWhiteSpace(fbd.SelectedPath)){
-                    Console.WriteLine("Selected Path: " + fbd.SelectedPath);
-                    new BuildBat().Build(fbd.SelectedPath, BenchChoice.Cinebench);
-                    var cbResult = new CBRunner().Run();
-                    BuildViewModel.CbScore = cbResult.Split("(")[0].Split("CB ")[1];
+            if (string.IsNullOrWhiteSpace(fbd.SelectedPath)) return;
+            
+            Console.WriteLine("Selected Path: " + fbd.SelectedPath);
+            new BuildBat().Build(fbd.SelectedPath, BenchChoice.Cinebench);
+            var cbResult = CbRunner.Run();
+            BuildViewModel.CbScore = cbResult.Split("(")[0].Split("CB ")[1];
 
-                    BuildViewModel.Profile.ListBenchmarks.Add(new BenchmarkResult{
-                        BenchmarkType = "Cinebench",
-                        Score = BuildViewModel.CbScore
-                    });
-                }
-            }
+            BuildViewModel.Profile.ListBenchmarks.Add(new BenchmarkResult{
+                BenchmarkType = "Cinebench",
+                Score = BuildViewModel.CbScore
+            });
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e){
@@ -113,13 +112,13 @@ namespace yardstick
         }
 
         private void mnuNew_Click(object sender, EventArgs e){
-            About aboutWindow = new About();
+            var aboutWindow = new About();
             aboutWindow.ShowDialog();
         }
 
-        public class CBRunner
+        public static class CbRunner
         {
-            public string Run(){
+            public static string Run(){
                 // Process p = new Process();
                 // p.StartInfo.UseShellExecute = false;
                 // p.StartInfo.RedirectStandardOutput = true;
@@ -127,11 +126,10 @@ namespace yardstick
                 // p.Start();
                 // p.WaitForExit();
 
-                using (StreamReader rd = new StreamReader("text.txt")){
-                    string[] lines = rd.ReadToEnd()
-                        .Split(new string[]{Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-                    return lines[^2];
-                }
+                using var rd = new StreamReader("text.txt");
+                var lines = rd.ReadToEnd()
+                    .Split(new[]{Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+                return lines[^2];
             }
         }
     }

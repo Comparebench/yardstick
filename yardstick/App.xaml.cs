@@ -1,25 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
 using LibreHardwareMonitor.Hardware;
 
 namespace yardstick{
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application{
+    public partial class App {
         
         
     }
-    public class CBRunner
+    public class CbRunner
     {
-        public string Run()
-        {
+        public string Run(){
             // Process p = new Process();
             // p.StartInfo.UseShellExecute = false;
             // p.StartInfo.RedirectStandardOutput = true;
@@ -27,12 +20,10 @@ namespace yardstick{
             // p.Start();
             // p.WaitForExit();
 
-            using (StreamReader rd = new StreamReader("text.txt"))
-            {
-                string[] lines = rd.ReadToEnd()
-                    .Split(new string[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-                return lines[lines.Length - 2];
-            }
+            using StreamReader rd = new StreamReader("text.txt");
+            var lines = rd.ReadToEnd()
+                .Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+            return lines[^2];
         }
     }
     public class UpdateVisitor : IVisitor
