@@ -119,12 +119,12 @@ namespace yardstick
         public static class CbRunner
         {
             public static string Run(){
-                // Process p = new Process();
-                // p.StartInfo.UseShellExecute = false;
-                // p.StartInfo.RedirectStandardOutput = true;
-                // p.StartInfo.FileName = @"bench.bat";
-                // p.Start();
-                // p.WaitForExit();
+                Process p = new Process();
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.FileName = @"bench.bat";
+                p.Start();
+                p.WaitForExit();
 
                 using var rd = new StreamReader("text.txt");
                 var lines = rd.ReadToEnd()
