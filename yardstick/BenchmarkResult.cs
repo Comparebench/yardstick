@@ -1,23 +1,31 @@
 using System;
 using System.Collections.Generic;
+using LibreHardwareMonitor.Hardware;
 
 namespace yardstick
 {
     public class Profile
     {
+        public String Name{ get; set; }
+        
         public Profile(){
             ListBenchmarks = new List<BenchmarkResult>();
         }
 
-        public String CPUModel{ get; set; }
-        public String GPUModel{ get; set; }
+        public List<IHardware> CpuModels{ get; set; }
 
+        public List<IHardware> GpuModels{ get; set; }
+
+        public IHardware MotherboardModel{ get; set; }
+        
+        public IHardware RamModel{ get; set; }
+      
         public List<BenchmarkResult> ListBenchmarks{ get; set; }
     }
 
     public class BenchmarkResult
     {
         public string BenchmarkType{ get; set; }
-        public string score{ get; set; }
+        public string Score{ get; set; }
     }
 }
