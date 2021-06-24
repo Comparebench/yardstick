@@ -34,9 +34,7 @@
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="About" Click="mnuNew_Click" />
             </Menu>
-            <Menu DockPanel.Dock="Top">
-                <TextBlock Text="{Binding Source={x:Static local:Account.Name}}" />
-            </Menu>
+            
         </DockPanel>
 
         <!-- CPU -->

@@ -3,6 +3,7 @@ using IdentityModel.OidcClient;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using RestSharp;
@@ -17,7 +18,22 @@ namespace yardstick
         public Login(){
             
             InitializeComponent();
-            DiscordLogin();
+            if (File.Exists("auth.json")){
+                using (StreamReader file = File.OpenText("auth.json"))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    Account _account = (Account)serializer.Deserialize(file, typeof(Account));
+                    Authenticate(_account);
+            
+                    MainWindow mainWindow = new MainWindow(_restClient, _account);
+                    Close();
+                    mainWindow.ShowDialog();
+                }
+                
+            }
+            else{
+                DiscordLogin();
+            }
 
         }
 
@@ -36,34 +52,39 @@ namespace yardstick
         }
         
         private void DisplayResult(LoginResult loginResult){
-            
+            var _account = new Account();
             foreach (var claim in loginResult.User.Claims){
                 switch (claim.Type){
                     case "name":
-                        Account.Name = claim.Value;
+                        _account.Name = claim.Value;
                         break;
                     case "email":
-                        Account.Email = claim.Value;
+                        _account.Email = claim.Value;
                         break;
                     case "picture":
-                        Account.Picture = claim.Value;
+                        _account.Picture = claim.Value;
                         break;
                 }
             }
-            Account.Token = loginResult.IdentityToken;
+            _account.Token = loginResult.IdentityToken;
+            
+            if(!File.Exists("auth.json"))
+                File.Create("auth.json").Close();
+            var serializedAcc = JsonConvert.SerializeObject(_account);
+            File.WriteAllText("auth.json", serializedAcc);
             
 
-            Authenticate();
+            Authenticate(_account);
             
-            MainWindow mainWindow = new MainWindow(_restClient);
+            MainWindow mainWindow = new MainWindow(_restClient, _account);
             Close();
             mainWindow.ShowDialog();
         }
         
-        private void Authenticate()
+        private void Authenticate(Account account)
         {
             var request = new RestRequest("api/client_login", Method.POST);
-            request.AddJsonBody(JsonConvert.SerializeObject(Account.Token));
+            request.AddJsonBody(JsonConvert.SerializeObject(account.Token));
             var response = _restClient.Execute(request);
             _restClient.CookieContainer = new System.Net.CookieContainer();
             var authCookie = response.Cookies.First(a => a.Name == "auth_tkt");  

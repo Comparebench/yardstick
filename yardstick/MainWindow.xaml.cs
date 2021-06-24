@@ -18,11 +18,13 @@ namespace yardstick
     public partial class MainWindow
     {
         private readonly RestClient _restClient;
+        private Account _account;
 
         private BuildViewModel BuildViewModel{ get; set; }
         public List<Profile> Profiles{ get; set; } = new List<Profile>();
 
-        public MainWindow(RestClient restClient){
+        public MainWindow(RestClient restClient, Account account){
+            _account = account;
             _restClient = restClient;
             // Construct basic hardware info
             InitializeComponent();
