@@ -38,38 +38,28 @@
         </DockPanel>
 
         <!-- CPU -->
-        <ItemsControl
-            ItemsSource="{Binding CpuModels}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <WrapPanel>
-                            <TextBlock Style="{StaticResource ModelType}"
-                                       Text="CPU Model: " />
-                            <TextBlock Style="{StaticResource HardwareName}"
-                                       Text="{Binding Path=Name}" />
-                        </WrapPanel>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        
+        <Grid>
+            <WrapPanel>
+                <TextBlock Style="{StaticResource ModelType}"
+                           Text="CPU Model: " />
+                <TextBlock Style="{StaticResource HardwareName}"
+                           Text="{Binding Path=Profile.Cpu.Name}" />
+            </WrapPanel>
+        </Grid>
+                
 
         <!-- GPU -->
-        <ItemsControl
-            ItemsSource="{Binding GpuModels}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <WrapPanel>
-                            <TextBlock Style="{StaticResource ModelType}"
-                                       Text="GPU Model: " />
-                            <TextBlock Style="{StaticResource HardwareName}"
-                                       Text="{Binding Path=Name}" />
-                        </WrapPanel>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+  
+        <Grid>
+            <WrapPanel>
+                <TextBlock Style="{StaticResource ModelType}"
+                           Text="GPU Model: " />
+                <TextBlock Style="{StaticResource HardwareName}"
+                           Text="{Binding Path=Gpu}" />
+            </WrapPanel>
+        </Grid>
+                
 
         <!-- Motherboard -->
         <Grid>
@@ -77,7 +67,7 @@
                 <TextBlock Style="{StaticResource ModelType}"
                            Text="Mobo Model: " />
                 <TextBlock Style="{StaticResource HardwareName}"
-                           Text="{Binding MotherboardModel.Name}" />
+                           Text="{Binding Profile.Motherboard.BoardName}" />
             </WrapPanel>
         </Grid>
 
@@ -89,7 +79,7 @@
                 <TextBlock Style="{StaticResource HardwareName}">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0}, {1:0}GB">
-                            <Binding Path="RamModel.Name" />
+                            <Binding Path="Profile.RAMSticks[0].Manufacturer" />
                             <Binding Path="GetRamValue" />
                         </MultiBinding>
                     </TextBlock.Text>

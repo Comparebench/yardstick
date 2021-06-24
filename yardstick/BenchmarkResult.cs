@@ -1,24 +1,31 @@
 using System;
 using System.Collections.Generic;
-using LibreHardwareMonitor.Hardware;
+using HardwareInformation;
+using HardwareInformation.Information;
 
 namespace yardstick
 {
     public class Profile
     {
+        private MachineInformation _machineInformation;
         public String Name{ get; set; }
         
         public Profile(){
+            _machineInformation = MachineInformationGatherer.GatherInformation();
             ListBenchmarks = new List<BenchmarkResult>();
+            Cpu = _machineInformation.Cpu;
+            Gpus = _machineInformation.Gpus;
+            Motherboard = _machineInformation.SmBios;
+            RAMSticks = _machineInformation.RAMSticks;
         }
 
-        public List<IHardware> CpuModels{ get; set; }
+        public CPU Cpu { get; set; }
 
-        public List<IHardware> GpuModels{ get; set; }
+        public IReadOnlyList<GPU> Gpus{ get; set; }
 
-        public IHardware MotherboardModel{ get; set; }
+        public SMBios Motherboard { get; set; }
         
-        public IHardware RamModel{ get; set; }
+        public IReadOnlyList<RAM> RAMSticks { get; set; }
       
         public List<BenchmarkResult> ListBenchmarks{ get; set; }
     }

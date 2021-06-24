@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using LibreHardwareMonitor.Hardware;
 
 namespace yardstick.ViewModels
 {
@@ -17,16 +15,11 @@ namespace yardstick.ViewModels
         public BuildViewModel(){ }
 
         public Profile Profile{ get; }
+        
 
         public String Name{ get; set; }
 
-        public List<IHardware> CpuModels => Profile.CpuModels;
-
-        public List<IHardware> GpuModels => Profile.GpuModels;
-
-        public IHardware MotherboardModel => Profile.MotherboardModel;
-
-        public IHardware RamModel => Profile.RamModel;
+        /*public IHardware RamModel => Profile.M;*/
 
         public String CbScore{
             get => _cbScore;
@@ -36,10 +29,25 @@ namespace yardstick.ViewModels
             }
         }
 
-        public float? GetRamValue{
+        public String Gpu{
             get{
-                return Profile.RamModel.Sensors.SingleOrDefault(a => a.Name == "Memory Used")?.Max +
-                       Profile.RamModel.Sensors.SingleOrDefault(a => a.Name == "Memory Available")?.Max;
+                string gpuName = Profile.Gpus[0].Name;
+                if (Profile.Gpus[0].Vendor == "Nvidia Corporation"){
+                    gpuName += " " + "Founders Edition";
+                }
+
+                return gpuName;
+            }
+        }
+
+        public double GetRamValue{
+            get{
+                double capacity = 0.0;
+                for (int i = 0; i < Profile.RAMSticks.Count; i++){
+                    capacity += (Profile.RAMSticks[i].Capacity / Math.Pow(1024, 3));
+                }
+
+                return capacity;
             }
         }
 
