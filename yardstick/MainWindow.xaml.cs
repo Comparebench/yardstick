@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
-using LibreHardwareMonitor.Hardware;
+using HardwareInformation;
 using Newtonsoft.Json;
 using RestSharp;
 using yardstick.ViewModels;
@@ -27,39 +26,23 @@ namespace yardstick
             _account = account;
             _restClient = restClient;
             // Construct basic hardware info
+            
             InitializeComponent();
         }
 
         private Profile BuildProfile(){
-            Computer computer = new Computer{
-                IsCpuEnabled = true,
-                IsGpuEnabled = true,
-                IsMemoryEnabled = true,
-                IsMotherboardEnabled = true,
-                IsControllerEnabled = true,
-                IsNetworkEnabled = true,
-                IsStorageEnabled = true
-            };
-            computer.Open();
-            computer.Accept(new UpdateVisitor());
+            MachineInformation machineInformation = MachineInformationGatherer.GatherInformation(true);
 
-            var profile = new Profile{
-                CpuModels = computer.Hardware.Where(a => a.HardwareType == HardwareType.Cpu).ToList(),
-                GpuModels = computer.Hardware
-                    .Where(a => a.HardwareType == HardwareType.GpuAmd || a.HardwareType == HardwareType.GpuNvidia)
-                    .ToList(),
-                MotherboardModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Motherboard),
-                RamModel = computer.Hardware.First(a => a.HardwareType == HardwareType.Memory)
-            };
+            var profile = new Profile();
 
-            foreach (var hardware in computer.Hardware){
+            /*foreach (var hardware in computer.Hardware){
                 if (hardware.HardwareType != HardwareType.Cpu) continue;
                 foreach (var sensor in hardware.Sensors){
                     if (sensor.SensorType == SensorType.Clock){
                         Console.WriteLine("\tSensor: {0}, value: {1}", sensor.Name, sensor.Value);
                     }
                 }
-            }
+            }*/
 
             return profile;
         }
@@ -102,7 +85,7 @@ namespace yardstick
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
 
-            String irr = JsonConvert.SerializeObject(BuildViewModel.Profile, sets);
+            String irr = JsonConvert.SerializeObject(BuildViewModel.Profile);
 
             if(!File.Exists(BuildViewModel.Name + ".json"))
                 File.Create(BuildViewModel.Name + ".json").Close();

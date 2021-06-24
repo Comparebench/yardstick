@@ -17,6 +17,7 @@
     <ItemGroup>
       <PackageReference Include="Auth0.OidcClient.Core" Version="3.2.2" />
       <PackageReference Include="Auth0.OidcClient.WPF" Version="3.2.2" />
+      <PackageReference Include="HardwareInformation" Version="5.0.0" />
       <PackageReference Include="IdentityModel.OidcClient" Version="4.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
       <PackageReference Include="RestSharp" Version="106.11.4" />
