@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Threading.Tasks;
 
 namespace yardstick.ViewModels
 {
-    public class BuildViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         private String _cbScore;
-
-        public BuildViewModel(Profile profile){
-            Profile = profile;
+        public Boolean Loading{
+            get;
+            set;
         }
 
-        public BuildViewModel(){ }
+        public MainViewModel(){
+            Profile = new Profile();
+        }
 
-        public Profile Profile{ get; }
+
+        public Profile Profile{ get; set; }
         
 
         public String Name{ get; set; }
@@ -49,6 +54,17 @@ namespace yardstick.ViewModels
 
                 return capacity;
             }
+        }
+        
+        private async void GetProfileAsync(){
+            Loading = true;
+            //Invoked on the UI thread
+            //Run RetrieveDataAsync on a background thread
+            await Task.Run(() => {
+                
+            });
+            //Also invoked on the UI thread
+            Loading = false;
         }
 
         public List<BenchmarkResult> ListBenchmarks => Profile.ListBenchmarks;
