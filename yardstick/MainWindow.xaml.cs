@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using Auth0.OidcClient;
 using HardwareInformation;
 using Newtonsoft.Json;
 using RestSharp;
 using yardstick.ViewModels;
+using Application = System.Windows.Application;
 
 namespace yardstick
 {
@@ -16,42 +20,39 @@ namespace yardstick
     /// </summary>
     public partial class MainWindow
     {
-        private readonly RestClient _restClient;
-        private Account _account;
+        private Api api;
 
-        private BuildViewModel BuildViewModel{ get; set; }
+        private MainViewModel MainViewModel{ get; set; }
         public List<Profile> Profiles{ get; set; } = new List<Profile>();
 
-        public MainWindow(RestClient restClient, Account account){
-            _account = account;
-            _restClient = restClient;
-            // Construct basic hardware info
-            
+        public MainWindow(){
+            api = new Api();
             InitializeComponent();
+            MainViewModel = new MainViewModel();
+            MainViewModel.Loading = true;
+            DataContext = MainViewModel;
+            AttemptLogin();
+            if (Account.IsLoggedIn){
+                api.getAccountDetails();
+            }
         }
 
-        private Profile BuildProfile(){
-            MachineInformation machineInformation = MachineInformationGatherer.GatherInformation(true);
-
-            var profile = new Profile();
-
-            /*foreach (var hardware in computer.Hardware){
-                if (hardware.HardwareType != HardwareType.Cpu) continue;
-                foreach (var sensor in hardware.Sensors){
-                    if (sensor.SensorType == SensorType.Clock){
-                        Console.WriteLine("\tSensor: {0}, value: {1}", sensor.Name, sensor.Value);
-                    }
+        private void AttemptLogin(){
+            if (File.Exists("auth.json")){
+                using (StreamReader file = File.OpenText("auth.json"))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    Account.Token = (string)serializer.Deserialize(file, typeof(string));
+                    file.Close();
                 }
-            }*/
-
-            return profile;
+                api.Authenticate();
+            }
+            else{
+                var loginWindow = new Login();
+                loginWindow.ShowDialog();
+                api.Authenticate();
+            }
         }
-
-        // private void TestConnection(object sender, RoutedEventArgs e){
-        //     var request = new RestRequest("api/account/profile", Method.POST);
-        //     var response = _restClient.Execute(request);
-        //     Trace.WriteLine(response);
-        // }
 
         private void SelectCinebenchLocation(object sender, RoutedEventArgs e){
             using var fbd = new FolderBrowserDialog();
@@ -62,38 +63,12 @@ namespace yardstick
             Console.WriteLine("Selected Path: " + fbd.SelectedPath);
             new BuildBat().Build(fbd.SelectedPath, BenchChoice.Cinebench);
             var cbResult = CbRunner.Run();
-            BuildViewModel.CbScore = cbResult.Split("(")[0].Split("CB ")[1];
+            MainViewModel.CbScore = cbResult.Split("(")[0].Split("CB ")[1];
 
-            BuildViewModel.Profile.ListBenchmarks.Add(new BenchmarkResult{
+            MainViewModel.Profile.ListBenchmarks.Add(new BenchmarkResult{
                 BenchmarkType = "Cinebench",
-                Score = BuildViewModel.CbScore
+                Score = MainViewModel.CbScore
             });
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e){
-            BuildViewModel = new BuildViewModel(BuildProfile());
-
-            DataContext = BuildViewModel;
-        }
-
-        private void UploadResult(object sender, RoutedEventArgs e){
-            var request = new RestRequest("api/benchmarks/upload", Method.POST);
-
-            BuildViewModel.Name = BuildName.Text;
-
-            JsonSerializerSettings sets = new JsonSerializerSettings(){
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects
-            };
-
-            String irr = JsonConvert.SerializeObject(BuildViewModel.Profile);
-
-            if(!File.Exists(BuildViewModel.Name + ".json"))
-                File.Create(BuildViewModel.Name + ".json").Close();
-            File.WriteAllText(BuildViewModel.Name + ".json", irr);
-
-            request.AddJsonBody(irr);
-            var response = _restClient.Execute(request);
-            Trace.WriteLine(response);
         }
 
         private void mnuNew_Click(object sender, EventArgs e){
@@ -116,6 +91,12 @@ namespace yardstick
                     .Split(new[]{Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
                 return lines[^2];
             }
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            Application.Current.Shutdown();
         }
     }
 }

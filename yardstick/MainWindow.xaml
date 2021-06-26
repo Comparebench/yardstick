@@ -1,20 +1,29 @@
 ﻿<Window x:Class="yardstick.MainWindow"
-
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:yardstick"
         xmlns:viewModels="clr-namespace:yardstick.ViewModels"
+        xmlns:showMeTheXaml="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
         mc:Ignorable="d"
 
-        Title="Comparebench Yardstick" Height="400" Width="400" Loaded="Page_Loaded">
+        Title="Comparebench Yardstick" Height="600" Width="500">
+
 
     <Window.DataContext>
-        <viewModels:BuildViewModel />
+        <viewModels:MainViewModel />
     </Window.DataContext>
 
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2VisibilityConverter" />
+
         <Style x:Key="ModelType"
                TargetType="TextBlock">
             <Setter Property="FontSize" Value="18" />
@@ -36,9 +45,7 @@
             </Menu>
             
         </DockPanel>
-
         <!-- CPU -->
-        
         <Grid>
             <WrapPanel>
                 <TextBlock Style="{StaticResource ModelType}"
@@ -97,7 +104,7 @@
             </WrapPanel>
         </Grid>
 
-        <!-- Select CB Location -->
+        <!--~1~ Select CB Location @1@
         <Grid Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -110,7 +117,7 @@
             </Button>
         </Grid>
 
-        <!-- Upload -->
+        ~1~ Upload @1@
         <Grid Margin="5">
             <TextBox x:Name="BuildName" Width="150" HorizontalAlignment="Left"
                      Text="{Binding Path=Profile.Name, Mode=TwoWay}" />
@@ -120,25 +127,10 @@
                     Click="UploadResult">
                 Upload Result
             </Button>
-            <!-- <Button Margin="10,160,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="TestConnection">Test Connection</Button> -->
-        </Grid>
+            ~1~ <Button Margin="10,160,0,229" Width="177" Height="25" HorizontalAlignment="Left" Click="TestConnection">Test Connection</Button> @1@
+        </Grid>-->
 
-        <!-- <Grid Grid.Row="7" Grid.Column="0"> -->
-        <!--     <DataGrid -->
-        <!--         AutoGenerateColumns="False" -->
-        <!--         CanUserAddRows="False" -->
-        <!--         IsReadOnly="True" -->
-        <!--         CanUserDeleteRows="False" -->
-        <!--         Name="ProfileGrid" -->
-        <!--         ItemsSource="{Binding }"> -->
-        <!--         <DataGrid.Columns> -->
-        <!--             <DataGridTextColumn Header="Name" Binding="{Binding Profile.Name}" /> -->
-        <!--             <DataGridTextColumn Header="Build" Binding="{Binding Profile.CPUModel.Name}" /> -->
-        <!--             <DataGridTextColumn Header="Build" Binding="{Binding Profile.MotherboardModel.Name}" /> -->
-        <!--             <DataGridTextColumn Header="Build" Binding="{Binding Profile.GPUModels[0].Name}" /> -->
-        <!--         </DataGrid.Columns> -->
-        <!--     </DataGrid> -->
-        <!-- </Grid> -->
+
 
     </StackPanel>
 

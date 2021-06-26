@@ -1,11 +1,12 @@
 ﻿using System;
 namespace yardstick
 {
-    public class Account
+    public static class Account
     {
-        public String Name{ get; set; }
-        public String Picture{ get; set; }
-        public  String Email{ get; set; }
-        public  String Token{ get; set; }
+        public static String Name{ get; set; }
+        public static String Picture{ get; set; }
+        public static String Email{ get; set; }
+        public static String Token{ get; set; }
+        public static Boolean IsLoggedIn{ get; set; }
     }
 }
