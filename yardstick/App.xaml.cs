@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
+using MaterialDesignThemes.Wpf;
 
 namespace yardstick{
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App {
-        
         
     }
     public class CbRunner

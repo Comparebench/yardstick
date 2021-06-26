@@ -6,8 +6,11 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media;
 using Auth0.OidcClient;
 using HardwareInformation;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
 using RestSharp;
 using yardstick.ViewModels;
@@ -26,6 +29,17 @@ namespace yardstick
         public List<Profile> Profiles{ get; set; } = new List<Profile>();
 
         public MainWindow(){
+            var paletteHelper = new PaletteHelper();
+            //Retrieve the app's existing theme
+            ITheme theme = paletteHelper.GetTheme();
+
+            //Change the base theme to Dark
+            theme.SetBaseTheme(Theme.Dark);
+            //or theme.SetBaseTheme(Theme.Light);
+
+            //Change the app's current theme
+            paletteHelper.SetTheme(theme);
+            
             api = new Api();
             InitializeComponent();
             MainViewModel = new MainViewModel();
@@ -34,6 +48,8 @@ namespace yardstick
             AttemptLogin();
             if (Account.IsLoggedIn){
                 api.getAccountDetails();
+                Trace.WriteLine("Got account details");
+                Trace.WriteLine(Account.DisplayName);
             }
         }
 
@@ -53,6 +69,8 @@ namespace yardstick
                 api.Authenticate();
             }
         }
+        
+
 
         private void SelectCinebenchLocation(object sender, RoutedEventArgs e){
             using var fbd = new FolderBrowserDialog();

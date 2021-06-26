@@ -57,10 +57,8 @@ namespace yardstick{
         public void getAccountDetails(){
             var request = new RestRequest("api/account/profile", Method.POST);
             var response = _restClient.Execute(request);
-            var jsonResponse = JsonConvert.DeserializeObject<dynamic>(response.Content);
             dynamic test = JObject.Parse(response.Content);
-            string testString = test.user.display_name.ToString();
-            Trace.WriteLine(testString);
+            Account.DisplayName = test.user.display_name.ToString();
             
         }
 

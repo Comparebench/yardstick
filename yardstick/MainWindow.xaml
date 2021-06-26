@@ -39,12 +39,33 @@
     </Window.Resources>
 
     <StackPanel>
-        <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="About" Click="mnuNew_Click" />
-            </Menu>
-            
+        <DockPanel DockPanel.Dock="Right">
+            <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2" Mode="Dark" DockPanel.Dock="Right">
+                <StackPanel HorizontalAlignment="Right">
+                    <DockPanel>
+                        <materialDesign:PopupBox DockPanel.Dock="Right"  PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                            <materialDesign:PopupBox.ToggleContent>
+                                <TextBlock  Foreground="White" Text="{Binding Path=(local:Account.DisplayName)}"></TextBlock>
+                            </materialDesign:PopupBox.ToggleContent>             
+                            <StackPanel>
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    Margin="10">
+                                    <Button Content="Test"/>
+                                </StackPanel>
+                                
+                                <Separator/>
+                                        
+
+
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </DockPanel>
+                </StackPanel>
+            </materialDesign:ColorZone>
         </DockPanel>
+ 
         <!-- CPU -->
         <Grid>
             <WrapPanel>
