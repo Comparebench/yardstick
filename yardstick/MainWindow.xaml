@@ -65,14 +65,27 @@
                 </StackPanel>
             </materialDesign:ColorZone>
         </DockPanel>
- 
+        
+        <StackPanel>
+            <DockPanel DockPanel.Dock="Right">
+                    <StackPanel HorizontalAlignment="Right">
+                        <DockPanel>
+                            <ComboBox Width="100"
+                                materialDesign:HintAssist.Hint="Profiles" ItemsSource="{Binding Profiles}" DisplayMemberPath="Name">
+                                
+                            </ComboBox>
+                        </DockPanel>
+                    </StackPanel>
+            </DockPanel>
+        </StackPanel>
+        
         <!-- CPU -->
         <Grid>
             <WrapPanel>
                 <TextBlock Style="{StaticResource ModelType}"
                            Text="CPU Model: " />
                 <TextBlock Style="{StaticResource HardwareName}"
-                           Text="{Binding Path=Profile.Cpu.Name}" />
+                           Text="{Binding Path=CurrentProfile.Cpu.Name}" />
             </WrapPanel>
         </Grid>
                 
@@ -95,7 +108,7 @@
                 <TextBlock Style="{StaticResource ModelType}"
                            Text="Mobo Model: " />
                 <TextBlock Style="{StaticResource HardwareName}"
-                           Text="{Binding Profile.Motherboard.BoardName}" />
+                           Text="{Binding CurrentProfile.Motherboard.BoardName}" />
             </WrapPanel>
         </Grid>
 
@@ -107,23 +120,34 @@
                 <TextBlock Style="{StaticResource HardwareName}">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0}, {1:0}GB">
-                            <Binding Path="Profile.RAMSticks[0].Manufacturer" />
+                            <Binding Path="CurrentProfile.RAMSticks[0].Manufacturer" />
                             <Binding Path="GetRamValue" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
             </WrapPanel>
         </Grid>
+        
+        <ListView
+            ItemsSource="{Binding Profiles}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Cpu.Model}" Header="CPU" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Gpus[0].model}" Header="GPU" />
+                </GridView>
+            </ListView.View>
+        </ListView>
 
         <!-- CineBench Score -->
-        <Grid>
+        <!--<Grid>
             <WrapPanel>
                 <TextBlock Style="{StaticResource ModelType}"
                            Text="CB Score: " />
                 <TextBlock Style="{StaticResource HardwareName}"
                            Text="{Binding CbScore}" />
             </WrapPanel>
-        </Grid>
+        </Grid>-->
 
         <!--~1~ Select CB Location @1@
         <Grid Margin="5">

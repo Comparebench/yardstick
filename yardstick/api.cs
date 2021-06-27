@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
-using System.Dynamic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
 using Auth0.OidcClient;
-using IdentityModel.OidcClient;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using DataFormat = RestSharp.DataFormat;
@@ -59,10 +52,20 @@ namespace yardstick{
             var response = _restClient.Execute(request);
             dynamic test = JObject.Parse(response.Content);
             Account.DisplayName = test.user.display_name.ToString();
-            
         }
 
-        private void UploadResult(Profile profile){
+        public ObservableCollection<Profile> getProfiles(){
+            var request = new RestRequest("api/benchmarks/results", Method.POST);
+            var response = _restClient.Execute(request);
+            dynamic test = JObject.Parse(response.Content);
+            ObservableCollection<Profile> Profiles = new ObservableCollection<Profile>();
+            for (var i = 0; i < test.result.Count; i++){
+                Profiles.Add(new Profile(test.result[i]));
+            }
+            return Profiles;
+        }
+
+        private void UploadResult(CurrentProfile currentProfile){
             var request = new RestRequest("api/benchmarks/upload", Method.POST);
 
             /*BuildViewModel.Name = BuildName.Text;*/
@@ -71,11 +74,11 @@ namespace yardstick{
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
 
-            String irr = JsonConvert.SerializeObject(profile);
+            String irr = JsonConvert.SerializeObject(currentProfile);
 
-            if(!File.Exists(profile.Name + ".json"))
-                File.Create(profile.Name + ".json").Close();
-            File.WriteAllText(profile.Name + ".json", irr);
+            if(!File.Exists(currentProfile.Name + ".json"))
+                File.Create(currentProfile.Name + ".json").Close();
+            File.WriteAllText(currentProfile.Name + ".json", irr);
 
             request.AddJsonBody(irr);
             var response = _restClient.Execute(request);

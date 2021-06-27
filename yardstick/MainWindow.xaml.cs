@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Media;
-using Auth0.OidcClient;
-using HardwareInformation;
-using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json;
-using RestSharp;
 using yardstick.ViewModels;
 using Application = System.Windows.Application;
 
@@ -26,30 +18,31 @@ namespace yardstick
         private Api api;
 
         private MainViewModel MainViewModel{ get; set; }
-        public List<Profile> Profiles{ get; set; } = new List<Profile>();
 
         public MainWindow(){
             var paletteHelper = new PaletteHelper();
             //Retrieve the app's existing theme
             ITheme theme = paletteHelper.GetTheme();
-
             //Change the base theme to Dark
             theme.SetBaseTheme(Theme.Dark);
-            //or theme.SetBaseTheme(Theme.Light);
-
             //Change the app's current theme
             paletteHelper.SetTheme(theme);
-            
-            api = new Api();
             InitializeComponent();
+            api = new Api();
+            
             MainViewModel = new MainViewModel();
             MainViewModel.Loading = true;
-            DataContext = MainViewModel;
+            
             AttemptLogin();
             if (Account.IsLoggedIn){
                 api.getAccountDetails();
                 Trace.WriteLine("Got account details");
                 Trace.WriteLine(Account.DisplayName);
+                
+                MainViewModel.Profiles = api.getProfiles();
+                
+                DataContext = MainViewModel;
+                
             }
         }
 
@@ -83,7 +76,7 @@ namespace yardstick
             var cbResult = CbRunner.Run();
             MainViewModel.CbScore = cbResult.Split("(")[0].Split("CB ")[1];
 
-            MainViewModel.Profile.ListBenchmarks.Add(new BenchmarkResult{
+            MainViewModel.CurrentProfile.ListBenchmarks.Add(new BenchmarkResult{
                 BenchmarkType = "Cinebench",
                 Score = MainViewModel.CbScore
             });

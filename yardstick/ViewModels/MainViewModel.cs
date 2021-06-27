@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
 using System.Threading.Tasks;
 
 namespace yardstick.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private ObservableCollection<Profile> _profiles;
+
+        public ObservableCollection<Profile> Profiles{
+            get => _profiles;
+            set{
+                _profiles = value;
+                OnPropertyChanged("Profiles");
+            }
+        }
         private String _cbScore;
         public Boolean Loading{
             get;
@@ -15,12 +24,11 @@ namespace yardstick.ViewModels
         }
 
         public MainViewModel(){
-            Profile = new Profile();
+            CurrentProfile = new CurrentProfile();
+            
         }
-
-
-        public Profile Profile{ get; set; }
         
+        public CurrentProfile CurrentProfile{ get; set; }
 
         public String Name{ get; set; }
 
@@ -30,14 +38,14 @@ namespace yardstick.ViewModels
             get => _cbScore;
             set{
                 _cbScore = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("CbScore"));
+                OnPropertyChanged("CbScore");
             }
         }
 
         public String Gpu{
             get{
-                string gpuName = Profile.Gpus[0].Name;
-                if (Profile.Gpus[0].Vendor == "Nvidia Corporation"){
+                string gpuName = CurrentProfile.Gpus[0].Name;
+                if (CurrentProfile.Gpus[0].Vendor == "Nvidia Corporation"){
                     gpuName += " " + "Founders Edition";
                 }
 
@@ -48,8 +56,8 @@ namespace yardstick.ViewModels
         public double GetRamValue{
             get{
                 double capacity = 0.0;
-                for (int i = 0; i < Profile.RAMSticks.Count; i++){
-                    capacity += (Profile.RAMSticks[i].Capacity / Math.Pow(1024, 3));
+                for (int i = 0; i < CurrentProfile.RAMSticks.Count; i++){
+                    capacity += (CurrentProfile.RAMSticks[i].Capacity / Math.Pow(1024, 3));
                 }
 
                 return capacity;
@@ -67,13 +75,16 @@ namespace yardstick.ViewModels
             Loading = false;
         }
 
-        public List<BenchmarkResult> ListBenchmarks => Profile.ListBenchmarks;
+        public List<BenchmarkResult> ListBenchmarks => CurrentProfile.ListBenchmarks;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(PropertyChangedEventArgs e){
+        public void OnPropertyChanged(string propertyName)
+        {
             if (PropertyChanged != null)
-                PropertyChanged(this, e);
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

@@ -5,12 +5,12 @@ using HardwareInformation.Information;
 
 namespace yardstick
 {
-    public class Profile
+    public class CurrentProfile
     {
         private MachineInformation _machineInformation;
         public String Name{ get; set; }
         
-        public Profile(){
+        public CurrentProfile(){
             _machineInformation = MachineInformationGatherer.GatherInformation();
             ListBenchmarks = new List<BenchmarkResult>();
             Cpu = _machineInformation.Cpu;
