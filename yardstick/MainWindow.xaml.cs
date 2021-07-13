@@ -62,9 +62,22 @@ namespace yardstick
                 api.Authenticate();
             }
         }
+
+
+        private void OpenDialog(object sender, RoutedEventArgs e){
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "*.3dmark-result files | *.3dmark-result";
+            open.Multiselect = true;
+            open.Title = "Open 3DMark Files";
+            if (open.ShowDialog() == System.Windows.Forms.DialogResult.OK){
+                MainViewModel.CurrentProfile.BenchmarkFiles = open.FileNames;
+            }
+        }
+
+        private void UploadResult(object sender, RoutedEventArgs e){
+            api.UploadResult(MainViewModel.CurrentProfile);
+        }
         
-
-
         private void SelectCinebenchLocation(object sender, RoutedEventArgs e){
             using var fbd = new FolderBrowserDialog();
             fbd.ShowDialog();

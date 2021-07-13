@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Auth0.OidcClient;
@@ -54,6 +55,19 @@ namespace yardstick{
             Account.DisplayName = test.user.display_name.ToString();
         }
 
+        public void UploadFiles(string[] filenames){
+            
+            RestRequest restRequest = new RestRequest("/api/benchmarks/uploadtest");
+            restRequest.RequestFormat = DataFormat.Json;
+            restRequest.Method = Method.POST;
+            restRequest.AddHeader("Content-Type", "multipart/form-data");
+            foreach (String file in filenames){
+                restRequest.AddFile("3dmark_upload", file);
+            }
+            var response = _restClient.Execute(restRequest);
+            Trace.WriteLine(response.Content);
+            
+        }
         public ObservableCollection<Profile> getProfiles(){
             var request = new RestRequest("api/benchmarks/results", Method.POST);
             var response = _restClient.Execute(request);
@@ -65,23 +79,28 @@ namespace yardstick{
             return Profiles;
         }
 
-        private void UploadResult(CurrentProfile currentProfile){
+        public void UploadResult(CurrentProfile currentProfile){
             var request = new RestRequest("api/benchmarks/upload", Method.POST);
-
-            /*BuildViewModel.Name = BuildName.Text;*/
-
+            
             JsonSerializerSettings sets = new JsonSerializerSettings(){
                 PreserveReferencesHandling = PreserveReferencesHandling.Objects
             };
 
-            String irr = JsonConvert.SerializeObject(currentProfile);
+            String profileJson = JsonConvert.SerializeObject(currentProfile);
 
-            if(!File.Exists(currentProfile.Name + ".json"))
+            /*if(!File.Exists(currentProfile.Name + ".json"))
                 File.Create(currentProfile.Name + ".json").Close();
-            File.WriteAllText(currentProfile.Name + ".json", irr);
-
-            request.AddJsonBody(irr);
+            File.WriteAllText(currentProfile.Name + ".json", irr);*/
+            request.AddHeader("Content-Type", "multipart/form-data");
+            foreach (String file in currentProfile.BenchmarkFiles){
+                request.AddFile("3dmark_upload", file);
+            }
+            request.AddJsonBody(profileJson);
             var response = _restClient.Execute(request);
+            dynamic responseContent = JObject.Parse(response.Content);
+            var profile = new Profile(responseContent.profile);
+            
+            Trace.WriteLine(profile);
         }
     }
 }

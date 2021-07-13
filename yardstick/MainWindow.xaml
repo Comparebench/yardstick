@@ -66,7 +66,8 @@
             </materialDesign:ColorZone>
         </DockPanel>
         
-        <StackPanel>
+        <!--> Profile selector <-->
+        <!--<StackPanel>
             <DockPanel DockPanel.Dock="Right">
                     <StackPanel HorizontalAlignment="Right">
                         <DockPanel>
@@ -77,8 +78,10 @@
                         </DockPanel>
                     </StackPanel>
             </DockPanel>
-        </StackPanel>
+        </StackPanel>-->
         
+        <TextBox Width="150" HorizontalAlignment="Left"
+                 Text="{Binding Path=CurrentProfile.Name, Mode=TwoWay}" />
         <!-- CPU -->
         <Grid>
             <WrapPanel>
@@ -128,7 +131,8 @@
             </WrapPanel>
         </Grid>
         
-        <ListView
+        <!-- List of benchmarks -->
+        <!--<ListView
             ItemsSource="{Binding Profiles}">
             <ListView.View>
                 <GridView>
@@ -137,7 +141,16 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Gpus[0].model}" Header="GPU" />
                 </GridView>
             </ListView.View>
-        </ListView>
+        </ListView>-->
+        
+        <Button Width="177" Height="25" HorizontalAlignment="Left"
+                Click="OpenDialog">
+            Select 3DMark Results
+        </Button>
+        <Button Width="177" Height="25" HorizontalAlignment="Left"
+                Click="UploadResult">
+            Upload Result
+        </Button>
 
         <!-- CineBench Score -->
         <!--<Grid>

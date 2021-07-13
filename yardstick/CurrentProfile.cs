@@ -28,6 +28,8 @@ namespace yardstick
         public IReadOnlyList<RAM> RAMSticks { get; set; }
       
         public List<BenchmarkResult> ListBenchmarks{ get; set; }
+        
+        public string[] BenchmarkFiles{ get; set; }
     }
 
     public class BenchmarkResult
